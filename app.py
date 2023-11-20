@@ -14,7 +14,7 @@ if "messages" not in st.session_state.keys(): # Initialize the chat message hist
         {"role": "assistant", "content": "Ask me a question about Streamlit's open-source Python library!"}
     ]
 
-docs = SimpleDirectoryReader(input_dir="./data")r.load_data()
+docs = SimpleDirectoryReader(input_dir="./data").load_data()
 service_context = ServiceContext.from_defaults(llm=OpenAI(
   model="gpt-3.5-turbo",
   temperature=0.5,
