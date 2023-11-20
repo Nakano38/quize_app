@@ -91,13 +91,15 @@ if prompt := st.text_input("Your question"): # Prompt for user input and save to
     st.session_state.messages.append({"role": "user", "content": prompt})
 
 for message in st.session_state.messages: # Display the prior chat messages
-    with st.write(message["role"]):
-        st.write(message["content"])
+    speaker = "🙂"
+    if message["role"]=="assistant":
+        speaker="🤖"
+        
+        st.write(speaker + ": " + message["content"])
 
 
 # If last message is not from assistant, generate a new response
 if st.session_state.messages[-1]["role"] != "assistant":
-    with st.write("assistant"):
         with st.spinner("Thinking..."):
             response = chat_engine.chat(prompt)
             st.write(response.response)
