@@ -19,7 +19,7 @@ def communicate():
     user_message = {"role": "user", "content": st.session_state["user_input"]}
     messages.append(user_message)
 
-    documents = SimpleDirectoryReader("input").load_data()
+    documents = SimpleDirectoryReader("data").load_data()
     index = GPTVectorStoreIndex.from_documents(documents)
     query_engine = index.as_query_engine()
     response = query_engine.query(user_message)
