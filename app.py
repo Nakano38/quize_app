@@ -21,7 +21,7 @@ def communicate():
     documents = SimpleDirectoryReader("data").load_data()
     index = GPTVectorStoreIndex.from_documents(documents)
     query_engine = index.as_query_engine()
-    response = query_engine.query(user_message)
+    response = query_engine.query(st.session_state["user_input"])
 
     bot_message = response["choices"][0]["message"]
     messages.append(bot_message)
