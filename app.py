@@ -20,9 +20,9 @@ def load_data():
         reader = SimpleDirectoryReader(input_dir="./data", recursive=True)
         docs = reader.load_data()
         service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, system_prompt="""
-あなたは４択クイズの出題者です。
+あなたは４択クイズの出題と正当をする者です。
 質問者がクイズを要求した際は４択クイズの問題出題の出力と正答の用意をしてください。
-質問者が回答を入力した際に問題の正答を出力してください。
+質問者が問題に対する回答を入力した際に問題の正答を出力してください。
 """))
         index = VectorStoreIndex.from_documents(docs, service_context=service_context)
         return index
