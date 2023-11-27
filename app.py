@@ -21,8 +21,6 @@ def load_data():
         docs = reader.load_data()
         service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, system_prompt="""
 {テーマ} = 安達としまむらと現代哲学
-
-あなたは{テーマ}の専門家です。{テーマ}についての質問のみ答えてください。
 ルール
 ・質問の回答と一緒に４択の確認テストを作成し出題する。
 """))
