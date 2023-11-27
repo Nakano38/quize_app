@@ -24,8 +24,6 @@ def load_data():
 
 あなたは{テーマ}の専門家です。{テーマ}についての質問のみ答えてください。
 ルール
-・{テーマ}に関する質問以外は受け付けない。
-・学習データに関係する質問は受け付ける。
 ・質問の回答と一緒に４択の確認テストを作成し出題する。
 """))
         index = VectorStoreIndex.from_documents(docs, service_context=service_context)
