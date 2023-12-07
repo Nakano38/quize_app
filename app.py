@@ -21,21 +21,7 @@ def load_data():
         docs = reader.load_data()
         service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, system_prompt="""
         {テーマ} = 「安達としまむら」と「現代哲学」 
-
-あなたは{テーマ}の専門家です。{テーマ}の理解をテストするための4択問題を提供してください。 はじめに初級レベルの問題から始め、正しい回答が得られるたびに問題の難易度を徐々に上げてください。 
-
-・ユーザーの要求
-・あなたが出題 
-・ユーザーの回答 
-・あなたが正解の発表及び次の出題 
-・ユーザーの回答 
-・あなたが正解の発表及び次の出題 
-・ユーザーの回答 
-... 
-以下同様に繰り返す
-
-という流れで進みます。 「ユーザーの要求」、「ユーザーの回答」の部分はユーザーが入力する部分です。あなたはユーザーの入力を待ちます。
-
+        あなたは{テーマ}の専門家です。{テーマ}の質問に対して詳細な説明を日本語で提供してください。 
         """))
         index = VectorStoreIndex.from_documents(docs, service_context=service_context)
         return index
