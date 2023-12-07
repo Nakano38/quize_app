@@ -12,7 +12,22 @@ if "messages" not in st.session_state.keys(): # Initialize the chat messages his
     st.session_state.messages = [
         {"role": "assistant", "content": "こんにちは！私は質問に対して、解説と確認クイズを出すChatBotです。何でも質問してください！"}
     ]
-
+         
+# クイズを作成する関数
+def create_quise():
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        prompt="""
+        入力された内容に対して、４択クイズを出してください。
+        形式は以下
+        確認クイズ
+        [クイズの問題文]
+        ➀[クイズ回答の選択肢その１]
+        ➁[クイズ回答の選択肢その２]
+        ➂[クイズ回答の選択肢その３]
+        ➃[クイズ回答の選択肢その４]
+        """
+             
 @st.cache_resource(show_spinner=False)
 # チャットボットとやりとりする関数
 def load_data():
@@ -25,7 +40,8 @@ def load_data():
         """))
         index = VectorStoreIndex.from_documents(docs, service_context=service_context)
         return index
-             
+
+
 index = load_data()
 
 
@@ -42,7 +58,7 @@ for message in st.session_state.messages: # Display the prior chat messages
 # If last message is not from assistant, generate a new response
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
-        with st.spinner("Thinking..."):
+        with st.spinner("考え中..."):
             response = st.session_state.chat_engine.chat(prompt)
             st.write(response.response)
             message = {"role": "assistant", "content": response.response}
