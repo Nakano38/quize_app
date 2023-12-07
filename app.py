@@ -6,8 +6,7 @@ from llama_index import SimpleDirectoryReader
 
 st.set_page_config(page_title="Chat with the Streamlit docs, powered by LlamaIndex", page_icon="🦙", layout="centered", initial_sidebar_state="auto", menu_items=None)
 openai.api_key = st.secrets.OpenAIAPI.openai_api_key
-st.title("Chat with the Streamlit docs, powered by LlamaIndex 💬🦙")
-st.info("Check out the full tutorial to build this app in our [blog post](https://blog.streamlit.io/build-a-chatbot-with-custom-data-sources-powered-by-llamaindex/)", icon="📃")
+st.title("４択クイズを出すサンプルアプリです。")
          
 if "messages" not in st.session_state.keys(): # Initialize the chat messages history
     st.session_state.messages = [
@@ -20,9 +19,8 @@ def load_data():
         reader = SimpleDirectoryReader(input_dir="./data", recursive=True)
         docs = reader.load_data()
         service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, system_prompt="""
-あなたは４択クイズの出題と正当をする者です。
-質問者がクイズを要求した際は４択クイズの問題出題の出力と正答の用意をしてください。
-質問者が問題に対する回答を入力した際に問題の正答を出力してください。
+あなたは「安達としまむら」及び「現代哲学」のプロフェッショナルです。
+ユーザからの質問対して詳細に説明してください。
 """))
         index = VectorStoreIndex.from_documents(docs, service_context=service_context)
         return index
