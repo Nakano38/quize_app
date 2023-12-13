@@ -22,9 +22,13 @@ def load_data():
         docs = reader.load_data()
         service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, system_prompt="""
         {テーマ} = 「安達としまむら」と「現代哲学」 
-        あなたは{テーマ}の専門家です。{テーマ}の質問に対して詳細な説明を日本語で提供してください。 
-        その後、説明した内容にまつわる質問を４択でしてください。
-        質問の回答を受け取った場合は、答え合わせを行ってください。
+        
+        あなたは{テーマ}の専門家です。あなたは[入力者]に対し、以下の手順で{テーマ}に対する理解を深めさせてください。
+        手順１：[入力者]の入力を待つ
+        手順２：{テーマ}の入力に対して詳細な説明を日本語で提供してください。 
+        手順３：その後、手順１で説明した内容にまつわる質問を４択でしてください。
+        手順４：[入力者]の入力を待つ。
+        手順５：４択の質問に対する回答を受け取った場合は、４択の質問の正答を教えてください。
         """))
         index = VectorStoreIndex.from_documents(docs, service_context=service_context)
         return index
