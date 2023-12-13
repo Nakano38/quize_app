@@ -14,9 +14,9 @@ if "messages" not in st.session_state.keys(): # Initialize the chat messages his
     ]
     
 mode = st.radio(
-    horizontal = true
     "質問モードと回答モードを切り替えてお使いください",
-    ["***出題***", "***回答***"])
+    ["***出題***", "***回答***"],
+    horizontal = True)
 
 @st.cache_resource(show_spinner=False)
 # チャットボットとやりとりする関数
