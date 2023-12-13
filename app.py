@@ -17,7 +17,7 @@ mode = st.radio(
     "質問モードと回答モードを切り替えてお使いください",
     ["***出題***", "***回答***"],
     horizontal = True)
-
+"""
 @st.cache_resource(show_spinner=False)
 # チャットボットとやりとりする関数
 def load_data():
@@ -53,3 +53,4 @@ if st.session_state.messages[-1]["role"] != "assistant":
             st.write(response.response)
             message = {"role": "assistant", "content": response.response}
             st.session_state.messages.append(message) # Add response to message history
+"""
