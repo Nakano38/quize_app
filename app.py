@@ -8,6 +8,11 @@ st.set_page_config(page_title="Chat with the Streamlit docs, powered by LlamaInd
 openai.api_key = st.secrets.OpenAIAPI.openai_api_key
 st.title("教師ChatBotアプリ")
 
+if "messages" not in st.session_state.keys(): # Initialize the chat messages history
+    st.session_state.messages = [
+        {"role": "assistant", "content": "こんにちは！私は質問に対して、解説と確認クイズを出すChatBotです。何でも質問してください！"}
+    ]
+
 @st.cache_resource(show_spinner=False)
 # チャットボットとやりとりする関数
 def load_data():
@@ -27,14 +32,6 @@ index = load_data()
 
 if "chat_engine" not in st.session_state.keys(): # Initialize the chat engine
         st.session_state.chat_engine = index.as_chat_engine(chat_mode="condense_question", verbose=True)
-
-if "messages" not in st.session_state.keys(): # Initialize the chat messages history
-         prompt = "４択で回答できる質問を出してください。"
-         response = st.session_state.chat_engine.chat(prompt)
-         st.write(response.response)
-         st.session_state.messages = [
-                  {"role": "assistant", "content": response.response}
-         ]
 
 if prompt := st.chat_input("Your question"): # Prompt for user input and save to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
