@@ -35,7 +35,7 @@ if mode == "***回答***":
 
 
   index = load_data()
-    st.text("やほ")
+    print("やほ")
 
   if "chat_engine" not in st.session_state.keys(): # Initialize the chat engine
           st.session_state.chat_engine = index.as_chat_engine(chat_mode="condense_question", verbose=True)
