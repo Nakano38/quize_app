@@ -23,14 +23,18 @@ if mode == "***回答***":
   @st.cache_resource(show_spinner=False)
   # チャットボットとやりとりする関数
   def load_data():
+      st.text("2")
       with st.spinner(text="しばらくお待ちください"):
           reader = SimpleDirectoryReader(input_dir="./data", recursive=True)
+          st.text("3")
           docs = reader.load_data()
+          st.text("4")
           service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, system_prompt="""
           {テーマ} = 「安達としまむら」と「現代哲学」 
           
           あなたは{テーマ}の専門家です。質問に対して詳細な説明をしてください。
           """))
+          st.text("5")
           index = VectorStoreIndex.from_documents(docs, service_context=service_context)
           return index
 
