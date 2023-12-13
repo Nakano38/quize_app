@@ -29,7 +29,7 @@ if "chat_engine" not in st.session_state.keys(): # Initialize the chat engine
         st.session_state.chat_engine = index.as_chat_engine(chat_mode="condense_question", verbose=True)
 
 if "messages" not in st.session_state.keys(): # Initialize the chat messages history
-         prompt = "{テーマ}について４択で回答できる質問を出してください。"
+         prompt = "４択で回答できる質問を出してください。"
          response = st.session_state.chat_engine.chat(prompt)
          st.write(response.response)
          st.session_state.messages = [
