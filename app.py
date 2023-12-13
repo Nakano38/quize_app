@@ -29,6 +29,14 @@ def load_data():
         手順３：その後、手順１で説明した内容にまつわる質問を４択でしてください。
         手順４：[入力者]の入力を待つ。
         手順５：４択の質問に対する回答を受け取った場合は、４択の質問の正答を教えてください。
+
+        ※以下手順３の出力形式
+        Q[質問内容]
+
+        a.[選択肢１]
+        b.[選択肢２]
+        c.[選択肢３]
+        d.[選択肢４]
         """))
         index = VectorStoreIndex.from_documents(docs, service_context=service_context)
         return index
