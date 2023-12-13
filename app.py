@@ -19,7 +19,7 @@ mode = st.radio(
     horizontal = True)
 
 if mode == "***回答***":
-  print("1")
+  st.text("1")
   @st.cache_resource(show_spinner=False)
   # チャットボットとやりとりする関数
   def load_data():
@@ -36,7 +36,7 @@ if mode == "***回答***":
 
 
   index = load_data()
-  print("やほ")
+  st.text("やほ")
 
   if "chat_engine" not in st.session_state.keys(): # Initialize the chat engine
           st.session_state.chat_engine = index.as_chat_engine(chat_mode="condense_question", verbose=True)
