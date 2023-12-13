@@ -36,6 +36,7 @@ if mode == "***回答***":
           """))
           st.text("5")
           index = VectorStoreIndex.from_documents(docs, service_context=service_context)
+          st.text("6")
           return index
 
 
