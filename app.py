@@ -23,7 +23,7 @@ def load_data():
         service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, system_prompt="""
         {テーマ} = 「安達としまむら」と「現代哲学」 
         
-        あなたは{テーマ}の専門家です。{テーマ}について４択で回答できる質問を出してください。
+        あなたは{テーマ}の専門家です。「質問して」と入力されたら、{テーマ}について４択で回答できる質問を出してください。
         """))
         index = VectorStoreIndex.from_documents(docs, service_context=service_context)
         return index
