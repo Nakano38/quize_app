@@ -8,10 +8,9 @@ st.set_page_config(page_title="Chat with the Streamlit docs, powered by LlamaInd
 openai.api_key = st.secrets.OpenAIAPI.openai_api_key
 st.title("教師ChatBotアプリ")
 
-if "messages" not in st.session_state.keys(): # Initialize the chat messages history
-    st.session_state.messages = [
-        {"role": "assistant", "content": "こんにちは！私は質問に対して、解説と確認クイズを出すChatBotです。何でも質問してください！"}
-    ]
+mode = st.radio(
+    "質問モードと回答モードを切り替えてお使いください",
+    ["***出題***", "***回答***"])
 
 @st.cache_resource(show_spinner=False)
 # チャットボットとやりとりする関数
