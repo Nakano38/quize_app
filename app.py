@@ -13,21 +13,7 @@ if "messages" not in st.session_state.keys(): # Initialize the chat messages his
         {"role": "assistant", "content": "こんにちは！私は質問に対して、解説と確認クイズを出すChatBotです。何でも質問してください！"}
     ]
          
-# クイズを作成する関数
-def create_quise():
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        prompt="""
-        入力された内容に対して、４択クイズを出してください。
-        形式は以下
-        確認クイズ
-        [クイズの問題文]
-        ➀[クイズ回答の選択肢その１]
-        ➁[クイズ回答の選択肢その２]
-        ➂[クイズ回答の選択肢その３]
-        ➃[クイズ回答の選択肢その４]
-        """
-             
+
 @st.cache_resource(show_spinner=False)
 # チャットボットとやりとりする関数
 def load_data():
@@ -37,6 +23,7 @@ def load_data():
         service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, system_prompt="""
         {テーマ} = 「安達としまむら」と「現代哲学」 
         あなたは{テーマ}の専門家です。{テーマ}の質問に対して詳細な説明を日本語で提供してください。 
+        その後、説明した内容にまつわる質問を４択でしてください。
         """))
         index = VectorStoreIndex.from_documents(docs, service_context=service_context)
         return index
