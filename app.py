@@ -24,6 +24,7 @@ def load_data():
         {テーマ} = 「安達としまむら」と「現代哲学」 
         あなたは{テーマ}の専門家です。{テーマ}の質問に対して詳細な説明を日本語で提供してください。 
         その後、説明した内容にまつわる質問を４択でしてください。
+        質問の回答を受け取った場合は、答え合わせを行ってください。
         """))
         index = VectorStoreIndex.from_documents(docs, service_context=service_context)
         return index
