@@ -19,6 +19,7 @@ mode = st.radio(
     horizontal = True)
 
 if mode == "***回答***":
+  print("1")
   @st.cache_resource(show_spinner=False)
   # チャットボットとやりとりする関数
   def load_data():
