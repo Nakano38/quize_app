@@ -1,3 +1,4 @@
+import csv
 import streamlit as st
 from llama_index import VectorStoreIndex, ServiceContext, Document
 from llama_index.llms import OpenAI
@@ -23,25 +24,24 @@ if mode == "***回答***":
   @st.cache_resource(show_spinner=False)
   # チャットボットとやりとりする関数
   def load_data():
-      st.text("2")
       with st.spinner(text="しばらくお待ちください"):
-          reader = SimpleDirectoryReader(input_dir="./data", recursive=True)
-          st.text("3")
-          docs = reader.load_data()
-          st.text("4")
+          urls = []
+          with open('llamaindex_url.txt') as f:
+              reader = csv.reader(f)
+              for row in reader:
+                  urls.append(row[0])
+
+          documents = SimpleWebPageReader(html_to_text=True).load_data(urls)
           service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, system_prompt="""
-          {テーマ} = 「安達としまむら」と「現代哲学」 
+          {テーマ} = JR東日本の旅客営業規則 
           
           あなたは{テーマ}の専門家です。質問に対して詳細な説明をしてください。
           """))
-          st.text("5")
-          index = VectorStoreIndex.from_documents(docs, service_context=service_context)
-          st.text("6")
+          index = VectorStoreIndex.from_documents(documents, service_context=service_context)
           return index
 
 
   index = load_data()
-  st.text("やほ")
 
   if "chat_engine" not in st.session_state.keys(): # Initialize the chat engine
           st.session_state.chat_engine = index.as_chat_engine(chat_mode="condense_question", verbose=True)
