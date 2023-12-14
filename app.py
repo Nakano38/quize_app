@@ -32,7 +32,8 @@ if mode == "***回答***":
                   urls.append(row[0])
 
           SimpleWebPageReader = download_loader("SimpleWebPageReader")
-          documents = SimpleWebPageReader(html_to_text=True).load_data(urls)
+          loader = SimpleWebPageReader()
+          documents = loader.load_data(urls)
           service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, system_prompt="""
           {テーマ} = JR東日本の旅客営業規則 
           
