@@ -1,9 +1,9 @@
 import csv
 import streamlit as st
-from llama_index import VectorStoreIndex, ServiceContext, Document
+from llama_index import GPTVectorStoreIndex, ServiceContext, Document
 from llama_index.llms import OpenAI
 import openai
-from llama_index import SimpleDirectoryReader, SimpleWebPageReader
+from llama_index import SimpleWebPageReader
 
 st.set_page_config(page_title="Chat with the Streamlit docs, powered by LlamaIndex", page_icon="🦙", layout="centered", initial_sidebar_state="auto", menu_items=None)
 openai.api_key = st.secrets.OpenAIAPI.openai_api_key
@@ -37,7 +37,7 @@ if mode == "***回答***":
           
           あなたは{テーマ}の専門家です。質問に対して詳細な説明をしてください。
           """))
-          index = VectorStoreIndex.from_documents(documents, service_context=service_context)
+          index = GPTVectorStoreIndex.from_documents(documents, service_context=service_context)
           return index
 
 
