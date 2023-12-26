@@ -68,9 +68,11 @@ if mode == "***回答***":
           if Path("./storage").exists():
               storage_context = StorageContext.from_defaults(persist_dir="./storage")
               index = load_index_from_storage(storage_context)
+              st.text("ロードしたよ")
           else:
               index = GPTVectorStoreIndex.from_documents(documents, service_context=service_context)
               index.storage_context.persist()
+              st.text("保存したよ")
           
           return index
 
