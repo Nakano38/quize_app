@@ -29,6 +29,8 @@ if mode == "***回答***":
           with open('llamaindex_url.txt') as f:
               reader = csv.reader(f)
               for row in reader:
+                  if row.endwith(.html):
+                      
                   urls.append(row[0])
 
           SimpleWebPageReader = download_loader("SimpleWebPageReader", custom_path="local_dir")
