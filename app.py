@@ -56,12 +56,13 @@ if mode == "***回答***":
                           loader = ShiftJISToUTF8WebPageReader()
                       else:
                           loader = SimpleWebPageReader()
+                  else:
+                      loader = SimpleWebPageReader()
                   documents.append(loader.load_data(urls = row)[0])
-                  st.text(len(documents))
           service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, system_prompt="""
           {テーマ} = JR東日本の旅客営業規則 
           
-          あなたは{テーマ}の専門家です。
+          あなたは{テーマ}の専門家です。クライアントの質問に対して簡潔に説明し、それに関する4択の質問を出してください。
           """))
           index = GPTVectorStoreIndex.from_documents(documents, service_context=service_context)
           return index
