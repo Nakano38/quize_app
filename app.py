@@ -1,9 +1,32 @@
 import csv
+import requests
+import codecs
 import streamlit as st
 from llama_index import GPTVectorStoreIndex, ServiceContext, Document
 from llama_index import download_loader
 from llama_index.llms import OpenAI
 import openai
+
+SimpleWebPageReader = download_loader("SimpleWebPageReader", custom_path="local_dir")
+class ShiftJISToUTF8WebPageReader(SimpleWebPageReader):
+    def load_data(self, urls):
+        data = []
+        for url in urls:
+            response = requests.get(url)
+            response.encoding = "Shift_JIS"
+            content = response.content
+            utf8_content = codecs.decode(content, "shift-jis", "ignore").encode("utf-8", "ignore").decode("utf-8")
+            doc = Document(text=utf8_content)
+            data.append(doc)
+        return data
+
+def is_shift_jis(response):
+    content = response.text
+    if 'charset=Shift_JIS' in content:
+        st.text("Shift_jis変換します")
+        return True
+    else:
+        return False
 
 st.set_page_config(page_title="Chat with the Streamlit docs, powered by LlamaIndex", page_icon="🦙", layout="centered", initial_sidebar_state="auto", menu_items=None)
 openai.api_key = st.secrets.OpenAIAPI.openai_api_key
@@ -24,17 +47,16 @@ if mode == "***回答***":
   # チャットボットとやりとりする関数
   def load_data():
       with st.spinner(text="しばらくお待ちください"):
-          urls = []
+          documents = []
           with open('llamaindex_url.txt') as f:
               reader = csv.reader(f)
               for row in reader:
                   if row[0].endswith(".html"):
-                      st.text(row[0])
-                  urls.append(row[0])
-
-          SimpleWebPageReader = download_loader("SimpleWebPageReader", custom_path="local_dir")
-          loader = SimpleWebPageReader()
-          documents = loader.load_data(urls)
+                      if is_shift_jis(requests.get(row[0])):
+                          loader = ShiftJISToUTF8WebPageReader()
+                      else:
+                          loader = SimpleWebPageReader()
+                  documents.append(loader.load_data(urls = row[0])[0])
           service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, system_prompt="""
           {テーマ} = JR東日本の旅客営業規則 
           
