@@ -20,7 +20,6 @@ mode = st.radio(
     horizontal = True)
 
 if mode == "***回答***":
-  st.text("1")
   @st.cache_resource(show_spinner=False)
   # チャットボットとやりとりする関数
   def load_data():
@@ -30,7 +29,7 @@ if mode == "***回答***":
               reader = csv.reader(f)
               for row in reader:
                   if row.endwith(.html):
-                      
+                      st.text(row[0])
                   urls.append(row[0])
 
           SimpleWebPageReader = download_loader("SimpleWebPageReader", custom_path="local_dir")
