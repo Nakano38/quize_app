@@ -28,7 +28,7 @@ if mode == "***回答***":
           with open('llamaindex_url.txt') as f:
               reader = csv.reader(f)
               for row in reader:
-                  if row.endwith(.html):
+                  if row.endwith(".html"):
                       st.text(row[0])
                   urls.append(row[0])
 
