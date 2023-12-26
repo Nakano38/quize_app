@@ -1,8 +1,9 @@
 import csv
+from pathlib import Path
 import requests
 import codecs
 import streamlit as st
-from llama_index import GPTVectorStoreIndex, ServiceContext, Document
+from llama_index import GPTVectorStoreIndex, ServiceContext, Document, StorageContext, load_index_from_storage
 from llama_index import download_loader
 from llama_index.llms import OpenAI
 import openai
@@ -64,7 +65,13 @@ if mode == "***回答***":
           
           あなたは{テーマ}の専門家です。クライアントの質問に対して簡潔に説明し、それに関する4択の質問を出してください。
           """))
-          index = GPTVectorStoreIndex.from_documents(documents, service_context=service_context)
+          if Path("./storage").exists():
+              storage_context = StorageContext.from_defaults(persist_dir="./storage")
+              index = load_index_from_storage(storage_context)
+          else:
+              index = GPTVectorStoreIndex.from_documents(documents, service_context=service_context)
+              index.storage_context.persist()
+          
           return index
 
 
