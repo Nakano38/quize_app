@@ -65,12 +65,14 @@ if mode == "***回答***":
           
           あなたは{テーマ}の専門家です。クライアントの質問に対して簡潔に説明し、それに関する4択の質問を出してください。
           """))
+          st.text("うぇかぴぽ")
           if Path("./storage").exists():
+              st.text("ロードするよ")
               storage_context = StorageContext.from_defaults(persist_dir="./storage")
               index = load_index_from_storage(storage_context)
               st.text("ロードしたよ")
           else:
-              print("保存するよ")
+              st.text("保存するよ")
               index = GPTVectorStoreIndex.from_documents(documents, service_context=service_context)
               index.storage_context.persist()
               st.text("保存したよ")
