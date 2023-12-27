@@ -70,6 +70,7 @@ if mode == "***回答***":
               index = load_index_from_storage(storage_context)
               st.text("ロードしたよ")
           else:
+              print("保存するよ")
               index = GPTVectorStoreIndex.from_documents(documents, service_context=service_context)
               index.storage_context.persist()
               st.text("保存したよ")
